@@ -8,6 +8,7 @@
             Text = text;
         }
 
+        public Guid Id { get; set; } = Guid.NewGuid();
         public required DateOnly Date { get; set; }
         public required string Text { get; set; }
         public ICollection<Person>? Persons { get; set; }

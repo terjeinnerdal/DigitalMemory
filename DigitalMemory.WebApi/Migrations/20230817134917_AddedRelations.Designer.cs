@@ -3,6 +3,7 @@ using System;
 using DigitalMemory.WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DigitalMemory.WebApi.Migrations
 {
     [DbContext(typeof(DigitalMemoryWebApiContext))]
-    partial class DigitalMemoryWebApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230817134917_AddedRelations")]
+    partial class AddedRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
