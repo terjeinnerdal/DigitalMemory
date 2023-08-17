@@ -9,5 +9,6 @@
         public ICollection<Entry>? Entries { get; set; }
         public ICollection<Activity>? Activities { get; set; }
         public ICollection<Person>? Persons { get; set; }
+        public ICollection<Event>? Events { get; set; }
     }
 }

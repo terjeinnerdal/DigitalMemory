@@ -14,5 +14,6 @@
         public ICollection<Picture>? Pictures { get; set; }
         public ICollection<Video>? Videos { get; set; }
         public ICollection<Location>? Locations { get; set; }
+        public ICollection<Event>? Events { get; set; }
     }
 }
