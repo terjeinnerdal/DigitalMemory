@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace Models
+﻿namespace Models
 {
     public class Person : EntityBase
     {

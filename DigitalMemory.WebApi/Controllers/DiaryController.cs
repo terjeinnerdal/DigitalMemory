@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DigitalMemory.WebApi.Data;
 using Models;
@@ -117,6 +112,7 @@ namespace DigitalMemory.WebApi.Controllers
                 return NotFound();
             }
 
+            await _context.Entry(diary).Collection<Entry>("Entries").LoadAsync();
             _context.Diaries.Remove(diary);
             await _context.SaveChangesAsync();
 

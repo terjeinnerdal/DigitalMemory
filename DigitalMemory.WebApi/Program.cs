@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using DigitalMemory.WebApi.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DigitalMemoryWebApiContext>(options =>
