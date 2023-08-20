@@ -5,6 +5,7 @@ using Models;
 
 namespace DigitalMemory.WebApi.Controllers
 {
+    // TODO: Need to make sure only owner can GET, POST, PUT, PATCH and DELETE their diaries.
     [Route("api/[controller]")]
     [ApiController]
     public class DiaryController : ControllerBase
@@ -20,7 +21,6 @@ namespace DigitalMemory.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Diary>>> GetDiaries()
         {
-            // TODO: Need to make sure only owner can read their diaries.
             if (_context.Diaries == null)
             {
                 return NotFound();
