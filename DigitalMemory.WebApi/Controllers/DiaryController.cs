@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DigitalMemory.WebApi.Data;
-using Models;
+using DigitalMemory.Models;
 
 namespace DigitalMemory.WebApi.Controllers
 {

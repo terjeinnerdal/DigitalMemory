@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace DigitalMemory.Models
 {
     public class Entry : EntityBase
     {

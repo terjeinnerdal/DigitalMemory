@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using Models;
+﻿//using AutoMapper;
+//using Models;
 
-namespace DigitalMemory.WebApi.Dtos;
+//namespace DigitalMemory.WebApi.Dtos;
 
-public class DiaryProfile : Profile
-{
-    public DiaryProfile()
-    {
-        CreateMap<Diary, DiaryDto>();
-        CreateMap<Person, PersonDto>();
-    }
-}
+//public class DiaryProfile : Profile
+//{
+//    public DiaryProfile()
+//    {
+//        CreateMap<Diary, DiaryDto>();
+//        CreateMap<Person, PersonDto>();
+//    }
+//}

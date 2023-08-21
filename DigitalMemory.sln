@@ -5,9 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMemory", "DigitalMemory\DigitalMemory.csproj", "{F286AB79-5CB9-46E2-AC12-C56625CA4C74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{5D389439-964B-479B-B8A1-967EF10048B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMemory.Models", "Models\DigitalMemory.Models.csproj", "{5D389439-964B-479B-B8A1-967EF10048B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalMemory.WebApi", "DigitalMemory.WebApi\DigitalMemory.WebApi.csproj", "{726268AF-60F6-4F6F-B66A-31C737B61045}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMemory.WebApi", "DigitalMemory.WebApi\DigitalMemory.WebApi.csproj", "{726268AF-60F6-4F6F-B66A-31C737B61045}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

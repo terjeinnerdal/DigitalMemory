@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Models;
+using DigitalMemory.Models;
 
 namespace DigitalMemory.WebApi.Data
 {
