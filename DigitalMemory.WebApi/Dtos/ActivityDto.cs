@@ -2,7 +2,7 @@
 
 public class ActivityDto
 {
-    public enum State
+    public enum StateDto
     {
         NotStarted = 0,
         Started = 1,
@@ -21,5 +21,5 @@ public class ActivityDto
     public DateTime? End { get; set; }
     public EntryDto? Entry { get; set; }
     public DiaryDto? Diary { get; set; }
-    public State Status { get; set; } = State.NotStarted;
+    public StateDto Status { get; set; } = StateDto.NotStarted;
 }

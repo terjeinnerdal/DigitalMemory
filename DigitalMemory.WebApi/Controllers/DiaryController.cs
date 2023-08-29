@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using DigitalMemory.WebApi.Data;
 using DigitalMemory.Models;
+using DigitalMemory.WebApi.Dtos;
+using AutoMapper;
 
 namespace DigitalMemory.WebApi.Controllers
 {
@@ -11,28 +13,33 @@ namespace DigitalMemory.WebApi.Controllers
     public class DiaryController : ControllerBase
     {
         private readonly DigitalMemoryWebApiContext _context;
+        private readonly IMapper _mapper;
 
-        public DiaryController(DigitalMemoryWebApiContext context)
+        public DiaryController(DigitalMemoryWebApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Diary
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Diary>>> GetDiaries()
+        public async Task<ActionResult<IEnumerable<DiaryDto>>> GetDiaries()
         {
             if (_context.Diaries == null)
             {
                 return NotFound();
             }
+
             var diaries = await _context.Diaries.ToListAsync();
-            
-            return diaries;
+
+            var diaryDtos = _mapper.Map<IEnumerable<DiaryDto>>(diaries);
+            return diaryDtos.ToList<DiaryDto>();
         }
+
 
         // GET: api/Diary/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Diary?>> GetDiary(Guid id)
+        public async Task<ActionResult<DiaryDto>> GetDiary(Guid id)
         {
             if (_context.Diaries == null)
             {
@@ -44,10 +51,9 @@ namespace DigitalMemory.WebApi.Controllers
             {
                 return NotFound();
             }
-            
-            await _context.Entry(diary).Collection<Entry>("Entries").LoadAsync();
 
-            return diary;
+            await _context.Entry(diary).Collection<Entry>(e => e.Entries).LoadAsync();
+            return _mapper.Map<DiaryDto>(diary);
         }
 
         // PUT: api/Diary/5
@@ -84,17 +90,17 @@ namespace DigitalMemory.WebApi.Controllers
         // POST: api/Diary
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Diary>> PostDiary(Diary diary)
+        public async Task<ActionResult<Diary>> PostDiary(DiaryDto diaryDto)
         {
             if (_context.Diaries == null)
             {
                 return Problem("Entity set 'DigitalMemoryWebApiContext.Diary'  is null.");
             }
-
+            var diary = _mapper.Map<Diary>(diaryDto);
             await _context.Diaries.AddAsync(diary);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDiary", new { id = diary.Id }, diary);
+            return CreatedAtAction("GetDiary", new { id = diaryDto.Id }, diaryDto);
         }
 
         // DELETE: api/Diary/5

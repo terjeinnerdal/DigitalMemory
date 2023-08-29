@@ -2,11 +2,7 @@
 
 public abstract class BaseDto
 {
-    public BaseDto(DateTime created)
-    {
-        Created = created;
-    }
-
-    public DateTime Created { get; set; }
-    public DateTime Modified { get; set; }
+    public Guid Id { get; }
+    public DateTime Created { get; }
+    public DateTime? Modified { get; }
 }
