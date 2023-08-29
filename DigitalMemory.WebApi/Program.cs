@@ -8,7 +8,10 @@ builder.Services.AddDbContext<DigitalMemoryWebApiContext>(options =>
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddEndpointsApiExplorer();
+// The call to AddEndpointsApiExplorer shown in the preceding example is
+// required only for minimal APIs. For more information, see this StackOverflow
+// post: https://stackoverflow.com/a/71933535.
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
