@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace DigitalMemory.WebApi.Models
 {
     public class Activity : EntityBase
     {
