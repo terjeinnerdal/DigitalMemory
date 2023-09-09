@@ -24,6 +24,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file DigitalMemory/Dockerfile --tag digitalmemorywebapi:$(date +%s)
+      run: docker build . --file DigitalMemory/Dockerfile --tag digitalmemory:$(date +%s)
 
       
