@@ -1,6 +1,6 @@
 ﻿namespace DigitalMemory.WebApi.Dtos;
 
-public class ActivityDto
+public class ActivityDto : BaseDto
 {
     public enum StateDto
     {
@@ -9,12 +9,11 @@ public class ActivityDto
         Completed = 2
     }
 
-    public ActivityDto(string name)
+    public ActivityDto(string name) : base()
     {
         Name = name;
     }
 
-    public Guid Id { get; private set; }
     public required string Name { get; set; }
     public string? Description { get; set; }
     public DateTime? Start { get; set; }

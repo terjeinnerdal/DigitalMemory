@@ -1,10 +1,9 @@
 ﻿namespace DigitalMemory.WebApi.Dtos;
 
-public class EventDto
+public class EventDto : BaseDto
 {
-    public EventDto(string name) => Name = name;
+    public EventDto(string name) : base() => Name = name;
 
-    public Guid Id { get; private set; }
     public required string Name { get; set; }
     public EntryDto? Entry { get; set; }
     public LocationDto? Locations { get; set; }

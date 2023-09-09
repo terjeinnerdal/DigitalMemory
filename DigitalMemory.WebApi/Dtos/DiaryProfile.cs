@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DigitalMemory.Models;
+using DigitalMemory.WebApi.Models;
 
 namespace DigitalMemory.WebApi.Dtos;
 

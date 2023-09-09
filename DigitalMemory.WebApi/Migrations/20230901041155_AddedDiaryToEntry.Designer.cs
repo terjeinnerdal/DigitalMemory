@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DigitalMemory.WebApi.Migrations;
 
 [DbContext(typeof(DigitalMemoryWebApiContext))]
-[Migration("20230817134917_AddedRelations")]
-partial class AddedRelations
+[Migration("20230901041155_AddedDiaryToEntry")]
+partial class AddedDiaryToEntry
 {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,17 +55,250 @@ partial class AddedRelations
                 b.ToTable("DiaryPerson");
             });
 
+        modelBuilder.Entity("DigitalMemory.Models.Activity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Description")
+                    .HasColumnType("text");
+
+                b.Property<Guid?>("DiaryId")
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime?>("End")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<Guid?>("EntryId")
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.Property<DateTime?>("Start")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<int>("Status")
+                    .HasColumnType("integer");
+
+                b.HasKey("Id");
+
+                b.HasIndex("DiaryId");
+
+                b.HasIndex("EntryId");
+
+                b.ToTable("Activity");
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Diary", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.ToTable("Diaries");
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Entry", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<DateOnly>("Date")
+                    .HasColumnType("date");
+
+                b.Property<Guid>("DiaryId")
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Text")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.HasIndex("DiaryId");
+
+                b.ToTable("Entries");
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Event", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<Guid?>("EntryId")
+                    .HasColumnType("uuid");
+
+                b.Property<Guid?>("LocationsId")
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.HasIndex("EntryId");
+
+                b.HasIndex("LocationsId");
+
+                b.ToTable("Events");
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Location", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.ToTable("Locations");
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Person", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.ToTable("Persons");
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Picture", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<Guid?>("EntriesId")
+                    .HasColumnType("uuid");
+
+                b.Property<Guid?>("LocationId")
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Uri")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.HasIndex("EntriesId");
+
+                b.HasIndex("LocationId");
+
+                b.ToTable("Pictures");
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Video", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<Guid?>("EntryId")
+                    .HasColumnType("uuid");
+
+                b.Property<Guid?>("EventId")
+                    .HasColumnType("uuid");
+
+                b.Property<Guid?>("LocationId")
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime?>("Modified")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Uri")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.HasIndex("EntryId");
+
+                b.HasIndex("EventId");
+
+                b.HasIndex("LocationId");
+
+                b.ToTable("Videos");
+            });
+
         modelBuilder.Entity("EntryLocation", b =>
             {
+                b.Property<Guid>("EntriesId")
+                    .HasColumnType("uuid");
+
                 b.Property<Guid>("LocationsId")
                     .HasColumnType("uuid");
 
-                b.Property<Guid>("LocationsId1")
-                    .HasColumnType("uuid");
+                b.HasKey("EntriesId", "LocationsId");
 
-                b.HasKey("LocationsId", "LocationsId1");
-
-                b.HasIndex("LocationsId1");
+                b.HasIndex("LocationsId");
 
                 b.ToTable("EntryLocation");
             });
@@ -100,248 +333,15 @@ partial class AddedRelations
                 b.ToTable("EventPicture");
             });
 
-        modelBuilder.Entity("Models.Activity", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Description")
-                    .HasColumnType("text");
-
-                b.Property<Guid?>("DiaryId")
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime?>("End")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<Guid?>("EntryId")
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.Property<DateTime?>("Start")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<int>("Status")
-                    .HasColumnType("integer");
-
-                b.HasKey("Id");
-
-                b.HasIndex("DiaryId");
-
-                b.HasIndex("EntryId");
-
-                b.ToTable("Activity");
-            });
-
-        modelBuilder.Entity("Models.Diary", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.HasKey("Id");
-
-                b.ToTable("Diaries");
-            });
-
-        modelBuilder.Entity("Models.Entry", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<DateOnly>("Date")
-                    .HasColumnType("date");
-
-                b.Property<Guid?>("DiaryId")
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Text")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.HasKey("Id");
-
-                b.HasIndex("DiaryId");
-
-                b.ToTable("Entries");
-            });
-
-        modelBuilder.Entity("Models.Event", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<Guid?>("EntryId")
-                    .HasColumnType("uuid");
-
-                b.Property<Guid?>("LocationsId")
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.HasKey("Id");
-
-                b.HasIndex("EntryId");
-
-                b.HasIndex("LocationsId");
-
-                b.ToTable("Events");
-            });
-
-        modelBuilder.Entity("Models.Location", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.HasKey("Id");
-
-                b.ToTable("Locations");
-            });
-
-        modelBuilder.Entity("Models.Person", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.HasKey("Id");
-
-                b.ToTable("Persons");
-            });
-
-        modelBuilder.Entity("Models.Picture", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<Guid?>("EntriesId")
-                    .HasColumnType("uuid");
-
-                b.Property<Guid?>("LocationId")
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Uri")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.HasKey("Id");
-
-                b.HasIndex("EntriesId");
-
-                b.HasIndex("LocationId");
-
-                b.ToTable("Pictures");
-            });
-
-        modelBuilder.Entity("Models.Video", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Created")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<Guid?>("EntryId")
-                    .HasColumnType("uuid");
-
-                b.Property<Guid?>("EventId")
-                    .HasColumnType("uuid");
-
-                b.Property<Guid?>("LocationId")
-                    .HasColumnType("uuid");
-
-                b.Property<DateTime>("Modified")
-                    .HasColumnType("timestamp with time zone");
-
-                b.Property<string>("Uri")
-                    .IsRequired()
-                    .HasColumnType("text");
-
-                b.HasKey("Id");
-
-                b.HasIndex("EntryId");
-
-                b.HasIndex("EventId");
-
-                b.HasIndex("LocationId");
-
-                b.ToTable("Videos");
-            });
-
         modelBuilder.Entity("DiaryEvent", b =>
             {
-                b.HasOne("Models.Diary", null)
+                b.HasOne("DigitalMemory.Models.Diary", null)
                     .WithMany()
                     .HasForeignKey("DiariesId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("Models.Event", null)
+                b.HasOne("DigitalMemory.Models.Event", null)
                     .WithMany()
                     .HasForeignKey("EventsId")
                     .OnDelete(DeleteBehavior.Cascade)
@@ -350,71 +350,26 @@ partial class AddedRelations
 
         modelBuilder.Entity("DiaryPerson", b =>
             {
-                b.HasOne("Models.Diary", null)
+                b.HasOne("DigitalMemory.Models.Diary", null)
                     .WithMany()
                     .HasForeignKey("DiariesId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("Models.Person", null)
+                b.HasOne("DigitalMemory.Models.Person", null)
                     .WithMany()
                     .HasForeignKey("PersonsId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
             });
 
-        modelBuilder.Entity("EntryLocation", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Activity", b =>
             {
-                b.HasOne("Models.Entry", null)
-                    .WithMany()
-                    .HasForeignKey("LocationsId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-
-                b.HasOne("Models.Location", null)
-                    .WithMany()
-                    .HasForeignKey("LocationsId1")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-            });
-
-        modelBuilder.Entity("EntryPerson", b =>
-            {
-                b.HasOne("Models.Entry", null)
-                    .WithMany()
-                    .HasForeignKey("EntriesId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-
-                b.HasOne("Models.Person", null)
-                    .WithMany()
-                    .HasForeignKey("PersonsId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-            });
-
-        modelBuilder.Entity("EventPicture", b =>
-            {
-                b.HasOne("Models.Event", null)
-                    .WithMany()
-                    .HasForeignKey("EventsId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-
-                b.HasOne("Models.Picture", null)
-                    .WithMany()
-                    .HasForeignKey("PicturesId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-            });
-
-        modelBuilder.Entity("Models.Activity", b =>
-            {
-                b.HasOne("Models.Diary", "Diary")
+                b.HasOne("DigitalMemory.Models.Diary", "Diary")
                     .WithMany("Activities")
                     .HasForeignKey("DiaryId");
 
-                b.HasOne("Models.Entry", "Entry")
+                b.HasOne("DigitalMemory.Models.Entry", "Entry")
                     .WithMany()
                     .HasForeignKey("EntryId");
 
@@ -423,20 +378,24 @@ partial class AddedRelations
                 b.Navigation("Entry");
             });
 
-        modelBuilder.Entity("Models.Entry", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Entry", b =>
             {
-                b.HasOne("Models.Diary", null)
+                b.HasOne("DigitalMemory.Models.Diary", "Diary")
                     .WithMany("Entries")
-                    .HasForeignKey("DiaryId");
+                    .HasForeignKey("DiaryId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Diary");
             });
 
-        modelBuilder.Entity("Models.Event", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Event", b =>
             {
-                b.HasOne("Models.Entry", "Entry")
+                b.HasOne("DigitalMemory.Models.Entry", "Entry")
                     .WithMany("Events")
                     .HasForeignKey("EntryId");
 
-                b.HasOne("Models.Location", "Locations")
+                b.HasOne("DigitalMemory.Models.Location", "Locations")
                     .WithMany("Events")
                     .HasForeignKey("LocationsId");
 
@@ -445,13 +404,13 @@ partial class AddedRelations
                 b.Navigation("Locations");
             });
 
-        modelBuilder.Entity("Models.Picture", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Picture", b =>
             {
-                b.HasOne("Models.Entry", "Entries")
+                b.HasOne("DigitalMemory.Models.Entry", "Entries")
                     .WithMany("Pictures")
                     .HasForeignKey("EntriesId");
 
-                b.HasOne("Models.Location", "Location")
+                b.HasOne("DigitalMemory.Models.Location", "Location")
                     .WithMany("Pictures")
                     .HasForeignKey("LocationId");
 
@@ -460,17 +419,17 @@ partial class AddedRelations
                 b.Navigation("Location");
             });
 
-        modelBuilder.Entity("Models.Video", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Video", b =>
             {
-                b.HasOne("Models.Entry", "Entry")
+                b.HasOne("DigitalMemory.Models.Entry", "Entry")
                     .WithMany("Videos")
                     .HasForeignKey("EntryId");
 
-                b.HasOne("Models.Event", "Event")
+                b.HasOne("DigitalMemory.Models.Event", "Event")
                     .WithMany("Videos")
                     .HasForeignKey("EventId");
 
-                b.HasOne("Models.Location", "Location")
+                b.HasOne("DigitalMemory.Models.Location", "Location")
                     .WithMany("Videos")
                     .HasForeignKey("LocationId");
 
@@ -481,14 +440,59 @@ partial class AddedRelations
                 b.Navigation("Location");
             });
 
-        modelBuilder.Entity("Models.Diary", b =>
+        modelBuilder.Entity("EntryLocation", b =>
+            {
+                b.HasOne("DigitalMemory.Models.Entry", null)
+                    .WithMany()
+                    .HasForeignKey("EntriesId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("DigitalMemory.Models.Location", null)
+                    .WithMany()
+                    .HasForeignKey("LocationsId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("EntryPerson", b =>
+            {
+                b.HasOne("DigitalMemory.Models.Entry", null)
+                    .WithMany()
+                    .HasForeignKey("EntriesId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("DigitalMemory.Models.Person", null)
+                    .WithMany()
+                    .HasForeignKey("PersonsId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("EventPicture", b =>
+            {
+                b.HasOne("DigitalMemory.Models.Event", null)
+                    .WithMany()
+                    .HasForeignKey("EventsId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("DigitalMemory.Models.Picture", null)
+                    .WithMany()
+                    .HasForeignKey("PicturesId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("DigitalMemory.Models.Diary", b =>
             {
                 b.Navigation("Activities");
 
                 b.Navigation("Entries");
             });
 
-        modelBuilder.Entity("Models.Entry", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Entry", b =>
             {
                 b.Navigation("Events");
 
@@ -497,12 +501,12 @@ partial class AddedRelations
                 b.Navigation("Videos");
             });
 
-        modelBuilder.Entity("Models.Event", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Event", b =>
             {
                 b.Navigation("Videos");
             });
 
-        modelBuilder.Entity("Models.Location", b =>
+        modelBuilder.Entity("DigitalMemory.Models.Location", b =>
             {
                 b.Navigation("Events");
 

@@ -9,104 +9,103 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace DigitalMemory.WebApi.Migrations
+namespace DigitalMemory.WebApi.Migrations;
+
+[DbContext(typeof(DigitalMemoryWebApiContext))]
+[Migration("20230811110838_Initial")]
+partial class Initial
 {
-    [DbContext(typeof(DigitalMemoryWebApiContext))]
-    [Migration("20230811110838_Initial")]
-    partial class Initial
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "7.0.10")
+            .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+        NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Models.Diary", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+        modelBuilder.Entity("Models.Diary", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Diary");
-                });
+                b.ToTable("Diary");
+            });
 
-            modelBuilder.Entity("Models.Entry", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+        modelBuilder.Entity("Models.Entry", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
+                b.Property<DateOnly>("Date")
+                    .HasColumnType("date");
 
-                    b.Property<Guid?>("DiaryId")
-                        .HasColumnType("uuid");
+                b.Property<Guid?>("DiaryId")
+                    .HasColumnType("uuid");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Text")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("DiaryId");
+                b.HasIndex("DiaryId");
 
-                    b.ToTable("Entry");
-                });
+                b.ToTable("Entry");
+            });
 
-            modelBuilder.Entity("Models.Person", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+        modelBuilder.Entity("Models.Person", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<Guid?>("EntryId")
-                        .HasColumnType("uuid");
+                b.Property<Guid?>("EntryId")
+                    .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("EntryId");
+                b.HasIndex("EntryId");
 
-                    b.ToTable("Person");
-                });
+                b.ToTable("Person");
+            });
 
-            modelBuilder.Entity("Models.Entry", b =>
-                {
-                    b.HasOne("Models.Diary", null)
-                        .WithMany("Entries")
-                        .HasForeignKey("DiaryId");
-                });
+        modelBuilder.Entity("Models.Entry", b =>
+            {
+                b.HasOne("Models.Diary", null)
+                    .WithMany("Entries")
+                    .HasForeignKey("DiaryId");
+            });
 
-            modelBuilder.Entity("Models.Person", b =>
-                {
-                    b.HasOne("Models.Entry", null)
-                        .WithMany("Persons")
-                        .HasForeignKey("EntryId");
-                });
+        modelBuilder.Entity("Models.Person", b =>
+            {
+                b.HasOne("Models.Entry", null)
+                    .WithMany("Persons")
+                    .HasForeignKey("EntryId");
+            });
 
-            modelBuilder.Entity("Models.Diary", b =>
-                {
-                    b.Navigation("Entries");
-                });
+        modelBuilder.Entity("Models.Diary", b =>
+            {
+                b.Navigation("Entries");
+            });
 
-            modelBuilder.Entity("Models.Entry", b =>
-                {
-                    b.Navigation("Persons");
-                });
+        modelBuilder.Entity("Models.Entry", b =>
+            {
+                b.Navigation("Persons");
+            });
 #pragma warning restore 612, 618
-        }
     }
 }
