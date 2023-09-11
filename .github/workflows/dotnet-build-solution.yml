@@ -12,14 +12,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build all projects
-      run: dotnet build /DigitalMemory.WebApi/
-
-  dotnet-build-webapp:
-
-        runs-on: ubuntu-latest
+    - name: Check out code
     
-        steps:
-        - uses: actions/checkout@v3
-        - name: Build all projects
-          run: dotnet build ./DigitalMemory.sln
+    - name: build webapi
+
+
+    
+    - name: Build all projects
+      run: dotnet build ./DigitalMemory.sln
