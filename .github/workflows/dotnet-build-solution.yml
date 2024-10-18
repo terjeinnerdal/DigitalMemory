@@ -12,11 +12,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Check out code
-    
-    - name: build webapi
-
-
-    
     - name: Build all projects
       run: dotnet build ./DigitalMemory.sln
