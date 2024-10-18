@@ -7,13 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DigitalMemory.WebApi.Data;
 
-public sealed class DigitalMemoryWebApiContext : DbContext
+public sealed class DigitalMemoryWebApiContext(DbContextOptions<DigitalMemoryWebApiContext> options) : DbContext(options)
 {
-    public DigitalMemoryWebApiContext (DbContextOptions<DigitalMemoryWebApiContext> options)
-        : base(options)
-    {
-    }
-
     public DbSet<Diary> Diaries { get; set; } = default!;
     public DbSet<Entry> Entries { get; set; } = default!;
     public DbSet<Person> Persons { get; set; } = default!;

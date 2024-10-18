@@ -1,15 +1,9 @@
 ﻿namespace DigitalMemory.WebApi.Models;
 
-public class Entry : EntityBase
+public class Entry(DateOnly date, string text) : EntityBase
 {
-    public Entry(DateOnly date, string text)
-    {
-        Date = date;
-        Text = text;
-    }
-
-    public required DateOnly Date { get; set; }
-    public required string Text { get; set; }
+    public required DateOnly Date { get; set; } = date;
+    public required string Text { get; set; } = text;
     public ICollection<Person>? Persons { get; set; }
     public ICollection<Picture>? Pictures { get; set; }
     public ICollection<Video>? Videos { get; set; }

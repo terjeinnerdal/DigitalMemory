@@ -12,14 +12,9 @@ namespace DigitalMemory.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DiaryController : ControllerBase
+public class DiaryController(DigitalMemoryWebApiContext context) : ControllerBase
 {
-    private readonly DigitalMemoryWebApiContext _context;
-
-    public DiaryController(DigitalMemoryWebApiContext context)
-    {
-        _context = context;
-    }
+    private readonly DigitalMemoryWebApiContext _context = context;
 
     // GET: api/Diary
     [HttpGet]

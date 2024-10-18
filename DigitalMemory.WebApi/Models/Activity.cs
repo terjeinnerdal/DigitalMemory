@@ -1,6 +1,6 @@
 ﻿namespace DigitalMemory.WebApi.Models;
 
-public class Activity : EntityBase
+public class Activity(string name) : EntityBase
 {
     public enum State
     {
@@ -9,13 +9,8 @@ public class Activity : EntityBase
         Completed = 2
     }
 
-    public Activity(string name)
-    {
-        Name = name;
-    }
-
     public Guid Id { get; set; } = Guid.NewGuid();
-    public required string Name { get; set; }
+    public required string Name { get; set; } = name;
     public string? Description { get; set; }
     public DateTime? Start { get; set; }
     public DateTime? End { get; set; }
