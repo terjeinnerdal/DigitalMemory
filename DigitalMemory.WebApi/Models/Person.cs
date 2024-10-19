@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace DigitalMemory.WebApi.Models;
+﻿namespace DigitalMemory.WebApi.Models;
 
 public class Person : EntityBase
 {

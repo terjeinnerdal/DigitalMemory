@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DigitalMemory.WebApi.Models;
+﻿using DigitalMemory.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalMemory.WebApi.Data;
