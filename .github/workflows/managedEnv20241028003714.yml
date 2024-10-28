@@ -1,0 +1,43 @@
+on:
+  push:
+    branches:
+    - master
+env:
+  DOTNET_CORE_VERSION: 7.0.x
+  CONTAINER_APP_ENVIRONMENT_NAME: managedEnv20241028003714
+  RESOURCE_GROUP: apim-rg-terje
+  CONTAINER_REGISTRY_NAME: devkranksoftacr
+  CONTAINER_REGISTRY_LOGIN_SERVER: devkranksoftacr.azurecr.io
+jobs:
+  BuildAndDeployContainerApp:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+        - appsourcepath: DigitalMemory
+          containerappname: digitalmemory-container-app
+        - appsourcepath: DigitalMemory.WebApi
+          containerappname: digitalmemory.webapi-container-app
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.managedEnv20241028003714_SPN }}
+    - name: Container App deploy
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        appSourcePath: ${{ github.workspace }}/${{ matrix.appsourcepath }}
+        acrName: ${{ env.CONTAINER_REGISTRY_NAME }}
+        acrUsername: ${{ secrets.devkranksoftacr_USERNAME_8640 }}
+        acrPassword: ${{ secrets.devkranksoftacr_PASSWORD_8640 }}
+        imageToBuild: ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ matrix.containerappname }}:${{ github.sha }}
+        containerAppName: ${{ matrix.containerappname }}
+        containerAppEnvironment: ${{ env.CONTAINER_APP_ENVIRONMENT_NAME }}
+        resourceGroup: ${{ env.RESOURCE_GROUP }}
